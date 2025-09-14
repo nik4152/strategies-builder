@@ -1,0 +1,18 @@
+{
+  "name": "macd_pullback_vol_telegram",
+  "nodes": [
+    {"id":"src1","type":"sources.mock_csv","params":{"path":"data/seed/BTCUSDT_15m.csv"}},
+    {"id":"i1","type":"indicators.macd","params":{"fast":12,"slow":26,"signal":9}},
+    {"id":"f1","type":"filters.pullback_fibo","params":{"zone_low":0.382,"zone_high":0.618}},
+    {"id":"v1","type":"indicators.vol_ma","params":{"period":20,"mult":1.2}},
+    {"id":"s1","type":"signals.cross","params":{"a":"i1.macd","b":"i1.signal","dir":"up"}},
+    {"id":"logic","type":"signals.logic","params":{"inputs":["s1","f1","v1"]}},
+    {"id":"bt","type":"backtest.simple","params":{}},
+    {"id":"nt","type":"notifiers.telegram","params":{"chat_id":"REPLACE_ME","template":"MACD long {{symbol}} {{tf}} @{{close}}"}}
+  ],
+  "edges":[
+    ["src1","i1"],["src1","f1"],["src1","v1"],
+    ["i1","s1"],["s1","logic"],["f1","logic"],["v1","logic"],
+    ["logic","bt"],["logic","nt"]
+  ]
+}
