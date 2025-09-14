@@ -1,8 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom/client'
 
 function App() {
-  return <h1>Strategy Builder</h1>
+  const [live, setLive] = useState(false)
+  const positions: string[] = []
+  const pnl = 0
+  return (
+    <div>
+      <h1>Strategy Builder</h1>
+      <label>
+        Live Trading
+        <input type="checkbox" checked={live} onChange={e => setLive(e.target.checked)} />
+      </label>
+      <div>Daily PnL: {pnl}</div>
+      <div>Active Positions: {positions.length}</div>
+    </div>
+  )
 }
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
