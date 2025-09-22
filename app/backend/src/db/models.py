@@ -48,3 +48,19 @@ class RiskBlock(Base):
     reason: Mapped[str] = mapped_column(String)
     active: Mapped[bool] = mapped_column(Boolean, default=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+
+class OptimRun(Base):
+    __tablename__ = "optim_runs"
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid4()))
+    status: Mapped[str] = mapped_column(String, default="pending")
+    best_params: Mapped[dict | None] = mapped_column(JSON)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+
+class OptimResult(Base):
+    __tablename__ = "optim_results"
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid4()))
+    run_id: Mapped[str] = mapped_column(String)
+    params: Mapped[dict] = mapped_column(JSON)
+    metrics: Mapped[dict] = mapped_column(JSON)

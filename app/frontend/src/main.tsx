@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom/client'
+import { OptimizeModal } from './OptimizeModal'
 
 function App() {
   const [live, setLive] = useState(false)
@@ -14,6 +15,7 @@ function App() {
       </label>
       <div>Daily PnL: {pnl}</div>
       <div>Active Positions: {positions.length}</div>
+      <OptimizeModal />
     </div>
   )
 }
